@@ -1,0 +1,21 @@
+{
+  "name": "ab-carousel",
+  "version": "2.3.0",
+  "description": "Premium, ultra-lightweight and smooth Vanilla JS Carousel.",
+  "main": "ab-carousel.js",
+  "scripts": {
+    "build:js": "npx terser ab-carousel.js -o ab-carousel.min.js --compress --mangle",
+    "build:css": "npx cleancss -o ab-carousel.min.css ab-carousel.css",
+    "build": "npm run build:js && npm run build:css"
+  },
+  "keywords": [
+    "carousel",
+    "slider",
+    "vanilla-js",
+    "lightweight",
+    "premium",
+    "touch"
+  ],
+  "author": "ABLY PERU | Alejandro Ttupa Quispe",
+  "license": "MIT"
+}

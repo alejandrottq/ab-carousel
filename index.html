@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AB-Carousel | Premium & Ultra-Lightweight Slider</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="ab-carousel.min.css">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #0f172a;
+            --text-main: #334155;
+            --text-light: #64748b;
+            --bg-body: #f8fafc;
+            --surface: #ffffff;
+            --radius: 24px;
+            --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header / Nav */
+        header {
+            padding: 24px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--secondary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo span {
+            color: var(--primary);
+        }
+
+        .badge {
+            background: var(--primary-light, #eef2ff);
+            color: var(--primary);
+            padding: 6px 14px;
+            border-radius: 100px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 80px 0 60px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
+            font-weight: 700;
+            color: var(--secondary);
+            line-height: 1.1;
+            margin-bottom: 24px;
+            letter-spacing: -0.02em;
+        }
+
+        .hero p {
+            font-size: 20px;
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            background: var(--primary);
+            color: white;
+            padding: 16px 32px;
+            border-radius: 100px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px -5px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px -10px rgba(99, 102, 241, 0.6);
+            background: var(--primary-dark);
+        }
+
+        /* Demo Sections */
+        section {
+            padding: 60px 0;
+        }
+
+        .section-title {
+            margin-bottom: 40px;
+        }
+
+        h2 {
+            font-size: 32px;
+            color: var(--secondary);
+            margin-bottom: 12px;
+        }
+
+        .sub-title {
+            color: var(--text-light);
+            font-size: 16px;
+        }
+
+        /* Demo Cards */
+        .demo-card {
+            background: var(--surface);
+            border-radius: var(--radius);
+            overflow: hidden;
+            height: 100%;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            box-shadow: var(--shadow-md);
+            /* Transición gestionada por JS para evitar duplicidad */
+        }
+
+        .demo-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .demo-card-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 30px;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            color: white;
+        }
+
+        .demo-card-content h4 {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        .demo-card-content p {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        /* Features Grid */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin-top: 40px;
+        }
+
+        .feature-item {
+            background: var(--surface);
+            padding: 32px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--primary-light, #eef2ff);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+
+        /* Center Mode Variation */
+        .center-mode-demo .demo-card {
+            min-height: auto;
+            aspect-ratio: 16 / 9;
+            background: #000;
+        }
+        .center-mode-demo .ab-carousel-container {
+            padding: 40px 0;
+            overflow: visible; 
+        }
+        .center-mode-demo .ab-carousel {
+            overflow: hidden;
+        }
+        .center-mode-demo .section-title h2 { color: var(--secondary); }
+        .center-mode-demo .section-title p { color: var(--text-light); }
+
+        /* Code Block */
+        code {
+            /* background: #e2e8f0; */
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 0.9em;
+        }
+
+        footer {
+            padding: 60px 0;
+            text-align: center;
+            border-top: 1px solid #e2e8f0;
+            color: var(--text-light);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            h1 { font-size: 3rem; }
+            .hero { padding: 40px 0; }
+        }
+
+        /* Color Cards Styling */
+        .color-card {
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            font-weight: 700;
+            color: white;
+            border-radius: var(--radius);
+        }
+        .card-1 { background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); }
+        .card-2 { background: linear-gradient(135deg, #f43f5e 0%, #fb923c 100%); }
+        .card-3 { background: linear-gradient(135deg, #10b981 0%, #3b82f6 100%); }
+        .card-4 { background: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%); }
+        .card-5 { background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%); }
+
+        /* External Controls Styling */
+        .external-controls-box {
+            background: white;
+            padding: 30px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-md);
+            margin-top: 20px;
+        }
+        .controls-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding: 15px 20px;
+            background: var(--bg-body);
+            border-radius: 16px;
+        }
+        .custom-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .custom-btn:hover {
+            background: var(--primary-dark);
+            transform: scale(1.05);
+        }
+        .custom-dots {
+            display: flex;
+            gap: 8px;
+        }
+
+        /* Documentation Styles */
+        .docs-section {
+            padding: 40px 0;
+            margin-top: 40px;
+        }
+        .docs-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 15px;
+        }
+        .docs-table th, .docs-table td {
+            text-align: left;
+            padding: 16px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .docs-table th {
+            font-weight: 700;
+            color: var(--secondary);
+            background: #f8fafc;
+        }
+        .docs-table tr:last-child td {
+            border-bottom: none;
+        }
+        /* Editor-like Code Block (Monokai Theme) */
+        .code-container {
+            background: #272822;
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 20px 0;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        .code-header {
+            background: #1e1f1c;
+            padding: 12px 18px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid #3e3d32;
+        }
+        .code-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        .dot-red { background: #ff5f56; }
+        .dot-yellow { background: #ffbd2e; }
+        .dot-green { background: #27c93f; }
+        
+        .code-block {
+            padding: 24px;
+            margin: 0;
+            overflow-x: auto;
+            font-family: 'Fira Code', 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            color: #f8f8f2;
+        }
+        .code-block pre { margin: 0; }
+        .code-block code { color: inherit; }
+
+        /* Syntax Highlight Simulator (Monokai) */
+        .t-tag { color: #f92672; } /* Pink tags */
+        .t-attr { color: #a6e22e; } /* Green attributes */
+        .t-val { color: #e6db74; }  /* Yellow values */
+        .t-punct { color: #f8f8f2; } /* Light punctuation */
+        /* --- Premium Design for Demos (Applying to Base Library) --- */
+        .ab-carousel-nav {
+            width: 46px;
+            height: 46px;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            color: var(--secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            opacity: 0;
+        }
+        .ab-carousel:hover .ab-carousel-nav {
+            opacity: 1;
+        }
+        .ab-carousel-nav:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-50%) scale(1.1);
+        }
+        .ab-carousel-nav svg {
+            width: 20px;
+            height: 20px;
+            stroke-width: 3;
+        }
+
+        .ab-carousel-dot {
+            width: 8px;
+            height: 8px;
+            background: #cbd5e1;
+            border-radius: 50%;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .ab-carousel-dot.active {
+            background: var(--primary);
+            width: 24px;
+            border-radius: 4px;
+        }
+
+        /* --- Specific Demo Effects --- */
+        .ab-carousel-item {
+            transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.6s ease;
+        }
+
+        .center-mode-demo .ab-carousel-item {
+            transform: scale(0.85);
+            opacity: 0.4;
+        }
+        .center-mode-demo .ab-carousel-item.active {
+            transform: scale(1);
+            opacity: 1;
+            z-index: 2;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div class="logo">AB<span>Carousel</span></div>
+            <div class="badge">v2.0 Premium</div>
+        </header>
+
+        <main>
+            <!-- Hero -->
+            <section class="hero">
+                <h1>El Carrusel más Ligero y Elegante.</h1>
+                <p>Zero dependencias. Optimizado para el rendimiento. Personalización total desde HTML.</p>
+                <a href="#demos" class="btn">Ver Demos en Vivo</a>
+            </section>
+
+            <!-- Demo 1: Premium Cards -->
+            <section id="demos">
+                <div class="section-title">
+                    <h2>Multipágina Premium</h2>
+                    <p class="sub-title">Configuración: <code>data-slides="3" data-autoplay="true"</code></p>
+                </div>
+
+                <div class="ab-carousel" id="slider-premium" 
+                     data-slides="3" 
+                     data-autoplay="true" 
+                     data-duration="5000"
+                     data-responsive='{"1024":3, "900":2, "600":1}'>
+                    
+                    <div class="demo-card">
+                        <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=800&q=80" alt="Nature">
+                        <div class="demo-card-content">
+                            <h4>Explora lo desconocido</h4>
+                            <p>Aventuras increíbles en los lugares más remotos del mundo.</p>
+                        </div>
+                    </div>
+
+                    <div class="demo-card">
+                        <img src="https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=800&q=80" alt="Mountain">
+                        <div class="demo-card-content">
+                            <h4>Cimas Infinitas</h4>
+                            <p>Supera tus límites y alcanza la gloria en las montañas.</p>
+                        </div>
+                    </div>
+
+                    <div class="demo-card">
+                        <img src="https://images.unsplash.com/photo-1472214103451-9374bd1c798e?auto=format&fit=crop&w=800&q=80" alt="Forest">
+                        <div class="demo-card-content">
+                            <h4>Bosques Ancestrales</h4>
+                            <p>Conecta con la naturaleza en su estado más puro.</p>
+                        </div>
+                    </div>
+
+                    <div class="demo-card">
+                        <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=800&q=80" alt="Light">
+                        <div class="demo-card-content">
+                            <h4>Luz y Armonía</h4>
+                            <p>Encuentra tu paz interior en paisajes iluminados.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Demo 2: Center Mode (Netflix Style) -->
+            <section class="center-mode-demo">
+                <div class="section-title">
+                    <h2>Estilo App Store / Netflix</h2>
+                    <p class="sub-title">Configuración: <code>data-center="true" data-slides="1.5"</code></p>
+                </div>
+
+                <div class="ab-carousel" id="slider-center" 
+                     data-slides="1.8" 
+                     data-center="true" 
+                     data-autoplay="true"
+                     data-gap="40">
+                    
+                    <div class="demo-card">
+                        <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&w=1200&q=80" alt="">
+                    </div>
+                    <div class="demo-card">
+                        <img src="https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?auto=format&fit=crop&w=1200&q=80" alt="">
+                    </div>
+                    <div class="demo-card">
+                        <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=1200&q=80" alt="">
+                    </div>
+                    <div class="demo-card">
+                        <img src="https://images.unsplash.com/photo-1509281373149-e957c6296406?auto=format&fit=crop&w=1200&q=80" alt="">
+                    </div>
+                </div>
+            </section>
+
+            <!-- Demo 3: Color Cards (Versatilidad) -->
+            <section>
+                <div class="section-title">
+                    <h2>Multipágina de Colores</h2>
+                    <p class="sub-title">Configuración: <code>data-slides="5" data-autoplay="true"</code></p>
+                </div>
+
+                <div class="ab-carousel" id="slider-colors" 
+                     data-slides="5" 
+                     data-autoplay="true" 
+                     data-duration="3000"
+                     data-responsive='{"1200":4, "900":3, "600":1}'>
+                    <div class="color-card card-1">1</div>
+                    <div class="color-card card-2">2</div>
+                    <div class="color-card card-3">3</div>
+                    <div class="color-card card-4">4</div>
+                    <div class="color-card card-5">5</div>
+                    <div class="color-card card-1">6</div>
+                </div>
+            </section>
+
+            <!-- Demo 4: Limited Space & External Controls -->
+            <section>
+                <div class="section-title">
+                    <h2>Controles Externos & Espacio Reducido</h2>
+                    <p class="sub-title">Vincula cualquier elemento HTML como controlador.</p>
+                </div>
+
+                <div class="external-controls-box">
+                    <div class="controls-row">
+                        <button id="ext-prev" class="custom-btn">← Volver</button>
+                        <div id="ext-dots" class="custom-dots"></div>
+                        <button id="ext-next" class="custom-btn">Avanzar →</button>
+                    </div>
+
+                    <div class="ab-carousel" 
+                         data-slides="3" 
+                         data-nav-prev="#ext-prev" 
+                         data-nav-next="#ext-next" 
+                         data-nav="false"
+                         data-dots-container="#ext-dots"
+                         data-responsive='{"1024":3, "768":2, "500":1}'>
+                        <div class="demo-card" style="height: 250px;"><img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80" alt=""></div>
+                        <div class="demo-card" style="height: 250px;"><img src="https://images.unsplash.com/photo-1511884642898-4c92249e20b6?auto=format&fit=crop&w=600&q=80" alt=""></div>
+                        <div class="demo-card" style="height: 250px;"><img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80" alt=""></div>
+                        <div class="demo-card" style="height: 250px;"><img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=600&q=80" alt=""></div>
+                    </div>
+                </div>
+
+                <div class="small-demo" style="margin-top: 60px;">
+                    <h3>Espacio Reducido (Cálculo Automático)</h3>
+                    <div class="ab-carousel" id="slider-small" data-slides="3" data-nav="false">
+                        <div class="color-card card-1" style="height:120px; font-size: 1.5rem;">A</div>
+                        <div class="color-card card-2" style="height:120px; font-size: 1.5rem;">B</div>
+                        <div class="color-card card-3" style="height:120px; font-size: 1.5rem;">C</div>
+                        <div class="color-card card-4" style="height:120px; font-size: 1.5rem;">D</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Features -->
+            <section>
+                <div class="section-title">
+                    <h2>¿Por qué AB-Carousel?</h2>
+                </div>
+                <div class="features">
+                    <div class="feature-item">
+                        <div class="feature-icon">⚡</div>
+                        <h3>Ultra rápido</h3>
+                        <p>Menos de 15KB en total. Sin dependencias externas, solo JavaScript puro.</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">📱</div>
+                        <h3>Touch Friendly</h3>
+                        <p>Optimizado para móviles con gestos táctiles suaves y naturales.</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🎨</div>
+                        <h3>Glassmorphism</h3>
+                        <p>Diseño premium moderno con efectos de desenfoque y transparencias.</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">⚙️</div>
+                        <h3>Smart Autoplay</h3>
+                        <p>Se pausa automáticamente cuando no es visible o al interactuar.</p>
+                    </div>
+                </div>
+            </section>
+            <!-- Documentation -->
+            <section id="docs">
+                <div class="docs-section">
+                    <h2 class="doc-title">Documentación Técnica</h2>
+                    
+                    <h3 style="margin-top: 30px;">Cómo empezar</h3>
+                    <p>Para integrar AB-Carousel en tu proyecto, solo necesitas incluir los archivos CSS y JS en tu HTML:</p>
+                    
+                    <div class="code-container">
+                        <div class="code-header">
+                            <div class="code-dot dot-red"></div>
+                            <div class="code-dot dot-yellow"></div>
+                            <div class="code-dot dot-green"></div>
+                            <span style="color: #6c7086; font-size: 12px; margin-left: auto;">HTML Setup</span>
+                        </div>
+                        <div class="code-block">
+                            <pre><code><span class="t-punct">&lt;</span><span class="t-tag">link</span> <span class="t-attr">rel</span>=<span class="t-val">"stylesheet"</span> <span class="t-attr">href</span>=<span class="t-val">"ab-carousel.css"</span><span class="t-punct">&gt;</span>
+<span class="t-punct">&lt;</span><span class="t-tag">script</span> <span class="t-attr">src</span>=<span class="t-val">"ab-carousel.js"</span><span class="t-punct">&gt;&lt;/</span><span class="t-tag">script</span><span class="t-punct">&gt;</span></code></pre>
+                        </div>
+                    </div>
+
+                    <p style="margin-top: 20px;">Luego, define tu estructura básica de carrusel usando la clase <code>ab-carousel</code>:</p>
+
+                    <h3 style="margin-top: 40px;">Atributos Disponibles</h3>
+                    <table class="docs-table">
+                        <thead>
+                            <tr>
+                                <th>Atributo</th>
+                                <th>Descripción</th>
+                                <th>Default</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>data-slides</code></td>
+                                <td>Número de slides a mostrar simultáneamente.</td>
+                                <td><code>1</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>data-autoplay</code></td>
+                                <td>Activa el deslizamiento automático.</td>
+                                <td><code>false</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>data-duration</code></td>
+                                <td>Tiempo en ms entre cada slide de autoplay.</td>
+                                <td><code>3000</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>data-center</code></td>
+                                <td>Activa el modo de enfoque central.</td>
+                                <td><code>false</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>data-loop</code></td>
+                                <td>Ciclo infinito de los elementos.</td>
+                                <td><code>true</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>data-gap</code></td>
+                                <td>Espaciado en píxeles entre slides.</td>
+                                <td><code>20</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>data-nav</code></td>
+                                <td>Muestra u oculta las flechas por defecto.</td>
+                                <td><code>true</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>data-dots</code></td>
+                                <td>Muestra u oculta los puntos por defecto.</td>
+                                <td><code>true</code></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3 style="margin-top: 40px;">Ejemplo de Uso</h3>
+                    <div class="code-container">
+                        <div class="code-header">
+                            <div class="code-dot dot-red"></div>
+                            <div class="code-dot dot-yellow"></div>
+                            <div class="code-dot dot-green"></div>
+                            <span style="color: #6c7086; font-size: 12px; margin-left: auto;">index.html</span>
+                        </div>
+                        <div class="code-block">
+                            <pre><code><span class="t-punct">&lt;</span><span class="t-tag">div</span> <span class="t-attr">class</span>=<span class="t-val">"ab-carousel"</span> 
+     <span class="t-attr">data-slides</span>=<span class="t-val">"3"</span> 
+     <span class="t-attr">data-autoplay</span>=<span class="t-val">"true"</span> 
+     <span class="t-attr">data-duration</span>=<span class="t-val">"4000"</span>
+     <span class="t-attr">data-responsive</span>=<span class="t-val">'{"1024":3, "768":2, "480":1}'</span><span class="t-punct">&gt;</span>
+    <span class="t-punct">&lt;</span><span class="t-tag">div</span><span class="t-punct">&gt;</span>Slide 1<span class="t-punct">&lt;/</span><span class="t-tag">div</span><span class="t-punct">&gt;</span>
+    <span class="t-punct">&lt;</span><span class="t-tag">div</span><span class="t-punct">&gt;</span>Slide 2<span class="t-punct">&lt;/</span><span class="t-tag">div</span><span class="t-punct">&gt;</span>
+    <span class="t-punct">&lt;</span><span class="t-tag">div</span><span class="t-punct">&gt;</span>Slide 3<span class="t-punct">&lt;/</span><span class="t-tag">div</span><span class="t-punct">&gt;</span>
+<span class="t-punct">&lt;/</span><span class="t-tag">div</span><span class="t-punct">&gt;</span></code></pre>
+                        </div>
+                    </div>
+
+                    <h3 style="margin-top: 40px;">Vinculación Externa</h3>
+                    <p>Puedes usar selectores CSS para vincular botones fuera del contenedor del carrusel:</p>
+                    <table class="docs-table">
+                        <tbody>
+                            <tr>
+                                <td><code>data-nav-prev</code></td>
+                                <td>Selector para el botón "anterior" personalizado.</td>
+                            </tr>
+                            <tr>
+                                <td><code>data-nav-next</code></td>
+                                <td>Selector para el botón "siguiente" personalizado.</td>
+                            </tr>
+                            <tr>
+                                <td><code>data-dots-container</code></td>
+                                <td>Selector para el contenedor de puntos personalizado.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; 2026 AB-Carousel Premium. Desarrollado por <strong>ABLY PERU</strong> | Alejandro Ttupa Quispe</p>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="ab-carousel.min.js"></script>
+</body>
+</html>
+
