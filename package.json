@@ -1,12 +1,26 @@
 {
-  "name": "ab-carousel",
+  "name": "@alejandrottq/ab-carousel",
   "version": "2.3.0",
   "description": "Premium, ultra-lightweight and smooth Vanilla JS Carousel.",
-  "main": "ab-carousel.js",
+  "main": "ab-carousel.min.js",
+  "style": "ab-carousel.min.css",
+  "files": [
+    "ab-carousel.js",
+    "ab-carousel.min.js",
+    "ab-carousel.css",
+    "ab-carousel.min.css",
+    "LICENSE",
+    "README.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alejandrottq/ab-carousel.git"
+  },
   "scripts": {
     "build:js": "npx terser ab-carousel.js -o ab-carousel.min.js --compress --mangle",
     "build:css": "npx cleancss -o ab-carousel.min.css ab-carousel.css",
-    "build": "npm run build:js && npm run build:css"
+    "build": "npm run build:js && npm run build:css",
+    "prepare": "npm run build"
   },
   "keywords": [
     "carousel",
